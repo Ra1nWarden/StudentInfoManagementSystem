@@ -8,11 +8,11 @@ public final class StudentTableModel extends AbstractTableModel {
 	
 	private String[] columnNames = {"姓名", "学号", "性别", "年级", "出生日期"};
 	
+	// Mock data type does not match yet.
 	private Object[][] data = {{"王子豪", "12345", "男", "大四", "1992-10-16"}};
 
 	@Override
 	public int getRowCount() {
-		// TODO Auto-generated method stub
 		return data.length;
 	}
 

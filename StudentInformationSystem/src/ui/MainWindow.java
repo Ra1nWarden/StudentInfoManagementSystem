@@ -51,8 +51,8 @@ public final class MainWindow {
 		JScrollPane tablePanel = new JScrollPane(table);
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addComponent(tablePanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 740, Short.MAX_VALUE)
@@ -63,11 +63,14 @@ public final class MainWindow {
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(23)
-					.addComponent(tablePanel, GroupLayout.PREFERRED_SIZE, 479, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+					.addComponent(tablePanel, GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE)
+					.addGap(33)
 					.addComponent(buttonPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addGap(23))
 		);
+		
+		JButton button = new JButton("添加学生");
+		buttonPanel.add(button);
 		
 		JButton checkCourseButton = new JButton("查看课程");
 		//checkCourseButton.addActionListener(new TableSelectionButtonListener(table, frame));

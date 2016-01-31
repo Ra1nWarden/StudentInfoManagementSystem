@@ -5,10 +5,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.GridLayout;
 import javax.swing.JPanel;
-import java.awt.FlowLayout;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormSpecs;
@@ -17,7 +15,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class EditStudentInfoWindow extends StudentDetailWindow {
+public final class EditStudentInfoWindow extends StudentDetailWindow {
 	private JTextField nameField;
 	private JTextField idField;
 	private JTextField sexField;
