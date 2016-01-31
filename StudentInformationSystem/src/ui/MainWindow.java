@@ -10,11 +10,15 @@ import javax.swing.JPanel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.Color;
+import javax.swing.border.LineBorder;
 
-public class MainWindow {
+import javax.swing.ListSelectionModel;
+import javax.swing.JScrollPane;
+
+public final class MainWindow {
 
 	private JFrame frame;
-	private JPanel panel;
 	private JTable table;
 
 	/**
@@ -37,40 +41,46 @@ public class MainWindow {
 		frame.setBounds(100, 100, 752, 619);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		panel = new JPanel();
+		JPanel buttonPanel = new JPanel();
 		
-		JPanel panel_1 = new JPanel();
+		table = new JTable(new StudentTableModel());
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.setBorder(new LineBorder(new Color(0, 0, 0)));
+		table.setBackground(Color.WHITE);
+		
+		JScrollPane tablePanel = new JScrollPane(table);
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 746, Short.MAX_VALUE)
-						.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 740, Short.MAX_VALUE))
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(tablePanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 740, Short.MAX_VALUE)
+						.addComponent(buttonPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 740, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 499, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(23)
+					.addComponent(tablePanel, GroupLayout.PREFERRED_SIZE, 479, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+					.addComponent(buttonPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addGap(23))
 		);
 		
-		JButton button = new JButton("查看课程");
-		panel_1.add(button);
+		JButton checkCourseButton = new JButton("查看课程");
+		//checkCourseButton.addActionListener(new TableSelectionButtonListener(table, frame));
+		buttonPanel.add(checkCourseButton);
 		
-		JButton button_1 = new JButton("修改信息");
-		panel_1.add(button_1);
+		JButton editInformationButton = new JButton("修改信息");
+		//editInformationButton.addActionListener(new TableSelectionButtonListener(table, frame));
+		buttonPanel.add(editInformationButton);
 		
-		JButton button_2 = new JButton("删除");
-		panel_1.add(button_2);
-		
-		table = new JTable(new StudentTableModel());
-		panel.add(table);
+		JButton deleteEntryButton = new JButton("删除");
+		//deleteEntryButton.addActionListener(new TableSelectionButtonListener(table, frame));
+		buttonPanel.add(deleteEntryButton);
+
 		frame.getContentPane().setLayout(groupLayout);
 	}
 }
