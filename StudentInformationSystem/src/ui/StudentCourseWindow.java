@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.ListSelectionModel;
 
 public class StudentCourseWindow extends StudentDetailWindow {
 	private JTable courseTable;
@@ -78,6 +79,7 @@ public class StudentCourseWindow extends StudentDetailWindow {
 		controlPanel.add(comboBox);
 		
 		courseTable = new JTable(new CourseTableModel());
+		courseTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tablePanel.setViewportView(courseTable);
 		getContentPane().setLayout(groupLayout);
 

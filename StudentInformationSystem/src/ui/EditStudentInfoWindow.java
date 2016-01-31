@@ -38,9 +38,9 @@ public final class EditStudentInfoWindow extends StudentDetailWindow {
 		);
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 		
-		JPanel panel_1 = new JPanel();
-		getContentPane().add(panel_1);
-		panel_1.setLayout(new FormLayout(new ColumnSpec[] {
+		JPanel formPanel = new JPanel();
+		getContentPane().add(formPanel);
+		formPanel.setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("59px"),
 				ColumnSpec.decode("100px"),
 				FormSpecs.RELATED_GAP_COLSPEC,
@@ -64,38 +64,38 @@ public final class EditStudentInfoWindow extends StudentDetailWindow {
 				FormSpecs.DEFAULT_ROWSPEC,}));
 		
 		JLabel nameLabel = new JLabel("姓名：");
-		panel_1.add(nameLabel, "2, 2, center, center");
+		formPanel.add(nameLabel, "2, 2, center, center");
 		
 		nameField = new JTextField();
-		panel_1.add(nameField, "4, 2, center, center");
+		formPanel.add(nameField, "4, 2, center, center");
 		nameField.setColumns(10);
 		
 		JLabel idLabel = new JLabel("学号：");
-		panel_1.add(idLabel, "2, 4, center, center");
+		formPanel.add(idLabel, "2, 4, center, center");
 		
 		idField = new JTextField();
-		panel_1.add(idField, "4, 4, center, center");
+		formPanel.add(idField, "4, 4, center, center");
 		idField.setColumns(10);
 		
 		JLabel sexLabel = new JLabel("性别：");
-		panel_1.add(sexLabel, "2, 6, center, default");
+		formPanel.add(sexLabel, "2, 6, center, default");
 		
 		sexField = new JTextField();
-		panel_1.add(sexField, "4, 6, center, center");
+		formPanel.add(sexField, "4, 6, center, center");
 		sexField.setColumns(10);
 		
 		JLabel levelLabel = new JLabel("年级：");
-		panel_1.add(levelLabel, "2, 8, center, default");
+		formPanel.add(levelLabel, "2, 8, center, default");
 		
 		levelField = new JTextField();
-		panel_1.add(levelField, "4, 8, center, center");
+		formPanel.add(levelField, "4, 8, center, center");
 		levelField.setColumns(10);
 		
 		JLabel dateOfBirthLabel = new JLabel("出生日期：");
-		panel_1.add(dateOfBirthLabel, "2, 10, center, default");
+		formPanel.add(dateOfBirthLabel, "2, 10, center, default");
 		
 		dateOfBirthField = new JTextField();
-		panel_1.add(dateOfBirthField, "4, 10, center, center");
+		formPanel.add(dateOfBirthField, "4, 10, center, center");
 		dateOfBirthField.setColumns(10);
 		
 		JButton doneButton = new JButton("确定");
@@ -103,10 +103,10 @@ public final class EditStudentInfoWindow extends StudentDetailWindow {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		panel_1.add(doneButton, "2, 14, center, default");
+		formPanel.add(doneButton, "2, 14, center, default");
 		
 		JButton resetButton = new JButton("重置");
-		panel_1.add(resetButton, "4, 14, center, center");
+		formPanel.add(resetButton, "4, 14, center, center");
 
 	}
 
