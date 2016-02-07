@@ -3,6 +3,7 @@ package ui;
 import javax.swing.JFrame;
 import javax.swing.JTable;
 
+import data.StudentDAO;
 import data.StudentTableModel;
 
 import javax.swing.JButton;
@@ -20,12 +21,17 @@ public final class MainWindow {
 
 	private JFrame frame;
 	private JTable table;
+	private StudentDAO studentDAO;
 
 	/**
 	 * Create the application.
 	 */
 	public MainWindow() {
-		initialize();
+		try {
+			initialize();
+		} catch(Exception e) {
+			System.err.println(e.getMessage());
+		}
 	}
 	
 	public void show() {
@@ -35,7 +41,7 @@ public final class MainWindow {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize() throws Exception {
 		frame = new JFrame();
 		frame.setTitle("中法项目学生管理系统");
 		frame.setBounds(100, 100, 752, 619);
@@ -43,7 +49,8 @@ public final class MainWindow {
 		
 		JPanel buttonPanel = new JPanel();
 		
-		table = new JTable(new StudentTableModel());
+		studentDAO = new StudentDAO();
+		table = new JTable(new StudentTableModel(studentDAO.getAllStudents()));
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setBorder(new LineBorder(new Color(0, 0, 0)));
 		table.setBackground(Color.WHITE);

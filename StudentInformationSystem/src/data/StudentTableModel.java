@@ -1,6 +1,7 @@
 package data;
 
 import java.sql.Date;
+import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -8,12 +9,15 @@ public final class StudentTableModel extends AbstractTableModel {
 	
 	private String[] columnNames = {"姓名", "学号", "性别", "年级", "出生日期"};
 	
-	// Mock data type does not match yet.
-	private Object[][] data = {{"王子豪", "12345", "男", "大四", "1992-10-16"}};
+	private List<Student> students;
+	
+	public StudentTableModel(List<Student> students) {
+		this.students = students;
+	}
 
 	@Override
 	public int getRowCount() {
-		return data.length;
+		return students.size();
 	}
 
 	@Override
@@ -27,18 +31,26 @@ public final class StudentTableModel extends AbstractTableModel {
 	}
 	
 	public Student valueAtRow(int row) {
-		Student.Builder builder = new Student.Builder();
-		return builder.name((String) data[row][0])
-				.id((long) data[row][1])
-			    .sex((int) data[row][2])
-			    .level((int) data[row][3])
-			    .dateOfBirth((Date) data[row][4])
-			    .build();
+		return students.get(row);
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		return data[rowIndex][columnIndex];
+		Student student = students.get(rowIndex);
+		switch(columnIndex) {
+		case 0:
+			return student.getName();
+		case 1:
+			return student.getId();
+		case 2:
+			return student.getSex();
+		case 3:
+			return student.getLevel();
+		case 4:
+			return student.getDateOfBirth();
+		default:
+			return "";
+		}
 	}
 
 }

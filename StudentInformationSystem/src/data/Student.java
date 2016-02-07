@@ -6,11 +6,11 @@ public final class Student {
 	
 	private String name;
 	private long id;
-	private int sex;
-	private int level;
+	private Sex sex;
+	private Level level;
 	private Date dateOfBirth;
 	
-	private Student(String name, long id, int sex, int level, Date dateOfBirth) {
+	private Student(String name, long id, Sex sex, Level level, Date dateOfBirth) {
 		this.name = name;
 		this.id = id;
 		this.sex = sex;
@@ -34,19 +34,19 @@ public final class Student {
 		this.id = id;
 	}
 	
-	public int getSex() {
+	public Sex getSex() {
 		return sex;
 	}
 	
-	public void setSex(int sex) {
+	public void setSex(Sex sex) {
 		this.sex = sex;
 	}
 	
-	public int getLevel() {
+	public Level getLevel() {
 		return level;
 	}
 	
-	public void setLevel(int level) {
+	public void setLevel(Level level) {
 		this.level = level;
 	}
 	
@@ -61,8 +61,8 @@ public final class Student {
 	public static class Builder {
 		private String name;
 		private long id;
-		private int sex;
-		private int level;
+		private Sex sex;
+		private Level level;
 		private Date dateOfBirth;
 		
 		public Builder name(String name) {
@@ -75,12 +75,12 @@ public final class Student {
 			return this;
 		}
 		
-		public Builder sex(int sex) {
+		public Builder sex(Sex sex) {
 			this.sex = sex;
 			return this;
 		}
 		
-		public Builder level(int level) {
+		public Builder level(Level level) {
 			this.level = level;
 			return this;
 		}
@@ -94,5 +94,41 @@ public final class Student {
 			return new Student(name, id, sex, level, dateOfBirth);
 		}
 	}
+	
+	enum Sex {
+		Male, Female;
+		
+		@Override
+		public String toString() {
+			switch(this) {
+			case Male:
+				return "男";
+			case Female:
+				return "女";
+			default:
+				return "";
+			}
+		}
+	};
+	
+	enum Level {
+		Freshman, Sophomore, Junior, Senior;
+		
+		@Override
+		public String toString() {
+			switch(this) {
+			case Freshman:
+				return "大一";
+			case Sophomore:
+				return "大二";
+			case Junior:
+				return "大三";
+			case Senior:
+				return "大四";
+			default:
+				return "";
+			}
+		}
+	};
 
 }
