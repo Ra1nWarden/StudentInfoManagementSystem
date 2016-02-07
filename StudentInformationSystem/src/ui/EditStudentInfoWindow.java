@@ -11,12 +11,10 @@ import data.StudentDAO;
 public class EditStudentInfoWindow extends StudentInfoWindow {
 	
 	private final Student student;
-	private final MainWindow window;
 	
 	public EditStudentInfoWindow(StudentDAO studentDAO, Student student, MainWindow window) {
 		super(studentDAO);
 		this.student = student;
-		this.window = window;
 		setTitle("修改学生信息");
 		loadStudent();
 		resetButton.addActionListener(new ActionListener() {
@@ -43,8 +41,8 @@ public class EditStudentInfoWindow extends StudentInfoWindow {
 						System.err.println(err.getMessage());
 						JOptionPane.showMessageDialog(EditStudentInfoWindow.this, "修改失败！请联系管理员！", "错误", JOptionPane.ERROR_MESSAGE);
 					}
+					EditStudentInfoWindow.this.setVisible(false);
 				}
-				EditStudentInfoWindow.this.setVisible(false);
 			}
 		
 		});

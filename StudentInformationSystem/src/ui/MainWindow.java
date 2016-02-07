@@ -81,8 +81,17 @@ public final class MainWindow {
 					.addGap(23))
 		);
 		
-		JButton button = new JButton("添加学生");
-		buttonPanel.add(button);
+		JButton addStudentButton = new JButton("添加学生");
+		addStudentButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				AddStudentInfoWindow addWindow = new AddStudentInfoWindow(studentDAO, MainWindow.this);
+				addWindow.setVisible(true);
+			}
+			
+		});
+		buttonPanel.add(addStudentButton);
 		
 		JButton checkCourseButton = new JButton("查看课程");
 		//checkCourseButton.addActionListener(new TableSelectionButtonListener(table, frame));

@@ -79,6 +79,25 @@ public class StudentDAO {
 		}
 	}
 	
+	public int addStudent(Student newStudent) throws SQLException {
+		PreparedStatement statement = null;
+		try {
+			statement = connection.prepareStatement("insert into student_info_system.students "
+					+ "(name, sex, date_of_birth, level, student_id) "
+					+ "VALUES (?, ?, ?, ?, ?)");
+			statement.setString(1, newStudent.getName());
+			statement.setString(2, newStudent.getSex() == Sex.Male ? "M" : "F");
+			statement.setDate(3, newStudent.getDateOfBirth());
+			statement.setString(4, newStudent.getLevel().toString());
+			statement.setInt(5, newStudent.getId());
+			return statement.executeUpdate();
+		} finally {
+			if(statement != null) {
+				statement.close();
+			}
+		}
+	}
+	
 	private Student convertToStudent(ResultSet rs) throws Exception {
 		Student.Builder builder = new Student.Builder();
 		String name = rs.getString("name");
@@ -88,16 +107,14 @@ public class StudentDAO {
 		String sex = rs.getString("sex");
 		builder.sex(sex.equals("M") ? Sex.Male : Sex.Female);
 		String level = rs.getString("level");
-		switch(level) {
-		case "大一":
+		if(level.equals("大一"))
 			builder.level(Level.Freshman);
-		case "大二":
+		else if(level.equals("大二"))
 			builder.level(Level.Sophomore);
-		case "大三":
+		else if(level.equals("大三"))
 			builder.level(Level.Junior);
-		case "大四":
+		else
 			builder.level(Level.Senior);
-		}
 		builder.id(rs.getInt("student_id"));
 		return builder.build();
 	}

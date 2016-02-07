@@ -118,7 +118,7 @@ public class StudentInfoWindow extends JFrame {
 			return false;
 		}
 		String studentIdRegex = "[0-9]+";
-		String dateRegex = "[0-9]{4}-[0-9]{2}-[0-9]{2}";
+		String dateRegex = "[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}";
 		return idField.getText().matches(studentIdRegex) && dateOfBirthField.getText().matches(dateRegex);
 	}
 
