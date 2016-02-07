@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import javax.swing.JOptionPane;
+
 import data.Student.Level;
 import data.Student.Sex;
 
@@ -47,6 +49,19 @@ public class StudentDAO {
 		return ret;
 	}
 	
+	public int deleteStudent(Student student) throws SQLException {
+		PreparedStatement statement = null;
+		try {
+			statement = connection.prepareStatement("delete from students where student_id=?");
+			statement.setInt(1, student.getId());
+			return statement.executeUpdate();
+		} finally {
+			if(statement != null) {
+				statement.close();
+			}
+		}
+	}
+	
 	private Student convertToStudent(ResultSet rs) throws Exception {
 		Student.Builder builder = new Student.Builder();
 		String name = rs.getString("name");
@@ -66,7 +81,7 @@ public class StudentDAO {
 		case "大四":
 			builder.level(Level.Senior);
 		}
-		builder.id(rs.getLong("student_id"));
+		builder.id(rs.getInt("student_id"));
 		return builder.build();
 	}
 

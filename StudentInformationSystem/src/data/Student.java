@@ -5,12 +5,12 @@ import java.sql.Date;
 public final class Student {
 	
 	private String name;
-	private long id;
+	private int id;
 	private Sex sex;
 	private Level level;
 	private Date dateOfBirth;
 	
-	private Student(String name, long id, Sex sex, Level level, Date dateOfBirth) {
+	private Student(String name, int id, Sex sex, Level level, Date dateOfBirth) {
 		this.name = name;
 		this.id = id;
 		this.sex = sex;
@@ -26,11 +26,11 @@ public final class Student {
 		this.name = name;
 	}
 	
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 	
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	
@@ -60,7 +60,7 @@ public final class Student {
 	
 	public static class Builder {
 		private String name;
-		private long id;
+		private int id;
 		private Sex sex;
 		private Level level;
 		private Date dateOfBirth;
@@ -70,7 +70,7 @@ public final class Student {
 			return this;
 		}
 		
-		public Builder id(long id) {
+		public Builder id(int id) {
 			this.id = id;
 			return this;
 		}

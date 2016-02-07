@@ -1,8 +1,10 @@
 package ui;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
+import data.Student;
 import data.StudentDAO;
 import data.StudentTableModel;
 
@@ -10,8 +12,10 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.border.LineBorder;
 
 import javax.swing.ListSelectionModel;
@@ -84,13 +88,59 @@ public final class MainWindow {
 		buttonPanel.add(checkCourseButton);
 		
 		JButton editInformationButton = new JButton("修改信息");
-		//editInformationButton.addActionListener(new TableSelectionButtonListener(table, frame));
+		editInformationButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int selection = table.getSelectedRow();
+				if(selection == -1) {
+					JOptionPane.showMessageDialog(frame, "请选中要操作的学生。", "非法操作", JOptionPane.ERROR_MESSAGE);
+				} else {
+					// Show specific details of a student
+					Student selectedStudent = ((StudentTableModel) table.getModel()).valueAtRow(table.convertRowIndexToModel(selection));
+					EditStudentInfoWindow editWindow = new EditStudentInfoWindow(studentDAO);
+					editWindow.loadStudent(selectedStudent);
+					editWindow.setVisible(true);
+				}
+			}
+			
+		});
 		buttonPanel.add(editInformationButton);
 		
 		JButton deleteEntryButton = new JButton("删除");
-		//deleteEntryButton.addActionListener(new TableSelectionButtonListener(table, frame));
+		deleteEntryButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int selection = table.getSelectedRow();
+				if(selection == -1) {
+					JOptionPane.showMessageDialog(frame, "请选中要操作的学生。", "非法操作", JOptionPane.ERROR_MESSAGE);
+				} else {
+					// Show specific details of a student
+					Student selectedStudent = ((StudentTableModel) table.getModel()).valueAtRow(table.convertRowIndexToModel(selection));
+					int confirmationIndex = JOptionPane.showConfirmDialog(frame, "确定删除" + selectedStudent.getName() + "？", "删除学生信息", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+					if(confirmationIndex == JOptionPane.YES_OPTION) {
+						try {
+							int success = studentDAO.deleteStudent(selectedStudent);
+							if(success > 0) {
+								JOptionPane.showMessageDialog(frame, "删除成功！");
+								table.setModel(new StudentTableModel(studentDAO.getAllStudents()));
+							}
+						} catch(Exception err) {
+							JOptionPane.showMessageDialog(frame, "删除失败！", "错误", JOptionPane.ERROR_MESSAGE);
+						}
+					}
+				}
+			}
+			
+		});
 		buttonPanel.add(deleteEntryButton);
 
 		frame.getContentPane().setLayout(groupLayout);
+	}
+	
+	public static void main(String[] args) {
+		MainWindow app = new MainWindow();
+		app.show();
 	}
 }

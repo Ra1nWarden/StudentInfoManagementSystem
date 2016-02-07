@@ -16,7 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.ListSelectionModel;
 
-public class StudentCourseWindow extends StudentDetailWindow {
+public class StudentCourseWindow extends JFrame {
 	private JTable courseTable;
 
 	public void show() {
@@ -83,11 +83,5 @@ public class StudentCourseWindow extends StudentDetailWindow {
 		tablePanel.setViewportView(courseTable);
 		getContentPane().setLayout(groupLayout);
 
-	}
-
-	@Override
-	public void loadStudent(Student student) {
-		// TODO Auto-generated method stub
-		
 	}
 }

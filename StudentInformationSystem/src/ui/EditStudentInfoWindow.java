@@ -1,6 +1,8 @@
 package ui;
 
 import data.Student;
+import data.StudentDAO;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.GroupLayout;
@@ -12,20 +14,25 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public final class EditStudentInfoWindow extends StudentDetailWindow {
+public final class EditStudentInfoWindow extends JFrame {
 	private JTextField nameField;
 	private JTextField idField;
 	private JTextField sexField;
 	private JTextField levelField;
 	private JTextField dateOfBirthField;
+	private StudentDAO studentDAO;
 
 	/**
 	 * Create the panel.
 	 */
-	public EditStudentInfoWindow() {
+	public EditStudentInfoWindow(StudentDAO studentDAO) {
+		this.studentDAO = studentDAO;
+		setBounds(100, 100, 400, 228);
 		setTitle("修改学生信息");
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
@@ -110,9 +117,7 @@ public final class EditStudentInfoWindow extends StudentDetailWindow {
 
 	}
 
-	@Override
 	public void loadStudent(Student student) {
-		// TODO Auto-generated method stub
 		
 	}
 }
