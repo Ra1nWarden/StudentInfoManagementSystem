@@ -33,6 +33,7 @@ public final class MainWindow {
 	public MainWindow() {
 		try {
 			initialize();
+			loadData();
 		} catch(Exception e) {
 			System.err.println(e.getMessage());
 		}
@@ -54,7 +55,7 @@ public final class MainWindow {
 		JPanel buttonPanel = new JPanel();
 		
 		studentDAO = new StudentDAO();
-		table = new JTable(new StudentTableModel(studentDAO.getAllStudents()));
+		table = new JTable();
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setBorder(new LineBorder(new Color(0, 0, 0)));
 		table.setBackground(Color.WHITE);
@@ -98,8 +99,7 @@ public final class MainWindow {
 				} else {
 					// Show specific details of a student
 					Student selectedStudent = ((StudentTableModel) table.getModel()).valueAtRow(table.convertRowIndexToModel(selection));
-					EditStudentInfoWindow editWindow = new EditStudentInfoWindow(studentDAO);
-					editWindow.loadStudent(selectedStudent);
+					EditStudentInfoWindow editWindow = new EditStudentInfoWindow(studentDAO, selectedStudent, MainWindow.this);
 					editWindow.setVisible(true);
 				}
 			}
@@ -124,7 +124,7 @@ public final class MainWindow {
 							int success = studentDAO.deleteStudent(selectedStudent);
 							if(success > 0) {
 								JOptionPane.showMessageDialog(frame, "删除成功！");
-								table.setModel(new StudentTableModel(studentDAO.getAllStudents()));
+								loadData();
 							}
 						} catch(Exception err) {
 							JOptionPane.showMessageDialog(frame, "删除失败！", "错误", JOptionPane.ERROR_MESSAGE);
@@ -139,8 +139,8 @@ public final class MainWindow {
 		frame.getContentPane().setLayout(groupLayout);
 	}
 	
-	public static void main(String[] args) {
-		MainWindow app = new MainWindow();
-		app.show();
+	public void loadData() throws Exception {
+		table.setModel(new StudentTableModel(studentDAO.getAllStudents()));
 	}
+	
 }

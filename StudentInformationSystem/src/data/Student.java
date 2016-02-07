@@ -95,7 +95,7 @@ public final class Student {
 		}
 	}
 	
-	enum Sex {
+	public enum Sex {
 		Male, Female;
 		
 		@Override
@@ -111,7 +111,7 @@ public final class Student {
 		}
 	};
 	
-	enum Level {
+	public enum Level {
 		Freshman, Sophomore, Junior, Senior;
 		
 		@Override

@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import javax.swing.JOptionPane;
-
 import data.Student.Level;
 import data.Student.Sex;
 
@@ -54,6 +52,25 @@ public class StudentDAO {
 		try {
 			statement = connection.prepareStatement("delete from students where student_id=?");
 			statement.setInt(1, student.getId());
+			return statement.executeUpdate();
+		} finally {
+			if(statement != null) {
+				statement.close();
+			}
+		}
+	}
+	
+	public int updateStudent(Student oldStudent, Student newStudent) throws SQLException {
+		PreparedStatement statement = null;
+		try {
+			statement = connection.prepareStatement("update student_info_system.students "
+					+ "set name=?, sex=?, date_of_birth=?, level=?, student_id=? "
+					+ "where student_id=" + oldStudent.getId());
+			statement.setString(1, newStudent.getName());
+			statement.setString(2, newStudent.getSex() == Sex.Male ? "M" : "F");
+			statement.setDate(3, newStudent.getDateOfBirth());
+			statement.setString(4, newStudent.getLevel().toString());
+			statement.setInt(5, newStudent.getId());
 			return statement.executeUpdate();
 		} finally {
 			if(statement != null) {
