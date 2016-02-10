@@ -2,12 +2,17 @@ package data;
 
 public final class StudentCourse {
 	
+	private int id;
 	private String courseName;
 	private int courseId;
 	private String studentName;
 	private int studentId;
 	private double score;
 	private Origin origin;
+	
+	public int getId() {
+		return id;
+	}
 	
 	public Origin getOrigin() {
 		return origin;
@@ -57,22 +62,33 @@ public final class StudentCourse {
 		this.score = score;
 	}
 
-	private StudentCourse(String name, int id, String studentName, int studentId, double score, Origin origin) {
+	private StudentCourse(String name, int courseId, String studentName, int studentId, double score, Origin origin) {
 		this.courseName = name;
-		this.courseId = id;
+		this.courseId = courseId;
 		this.studentName = studentName;
 		this.studentId = studentId;
 		this.score = score;
 		this.origin = origin;
 	}
 	
+	private StudentCourse(int id, String name, int courseId, String studentName, int studentId, double score, Origin origin) {
+		this(name, courseId, studentName, studentId, score, origin);
+		this.id = id;
+	}
+	
 	public static class Builder {
+		private int id = -1;
 		private String courseName;
 		private int courseId;
 		private String studentName;
 		private int studentId;
 		private double score;
 		private Origin origin;
+		
+		public Builder id(int id) {
+			this.id = id;
+			return this;
+		}
 		
 		public Builder courseName(String name) {
 			this.courseName = name;
@@ -105,7 +121,11 @@ public final class StudentCourse {
 		}
 		
 		public StudentCourse build() {
-			return new StudentCourse(courseName, courseId, studentName, studentId, score, origin);
+			if(id == -1) {
+				return new StudentCourse(courseName, courseId, studentName, studentId, score, origin);
+			} else {
+				return new StudentCourse(id, courseName, courseId, studentName, studentId, score, origin);
+			}
 		}
 		
 	}

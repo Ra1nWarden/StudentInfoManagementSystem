@@ -1,13 +1,18 @@
 package ui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import data.StudentCourseTableModel;
+import data.StudentTableModel;
 import data.StudentCourse.Origin;
 import data.Student;
+import data.StudentCourse;
 import data.StudentCourseDAO;
 
 import javax.swing.GroupLayout;
@@ -20,7 +25,7 @@ import javax.swing.JComboBox;
 import javax.swing.ListSelectionModel;
 
 public class StudentCourseWindow extends JFrame {
-	private JTable courseTable;
+	private JTable table;
 	private StudentCourseDAO studentCourseDAO;
 	private Student student;
 	private Origin displayOrigin;
@@ -28,8 +33,7 @@ public class StudentCourseWindow extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public StudentCourseWindow(Student student, MainWindow window)
-			throws Exception {
+	public StudentCourseWindow(Student student, MainWindow window) throws Exception {
 		this.studentCourseDAO = new StudentCourseDAO();
 		this.student = student;
 		this.displayOrigin = Origin.Local;
@@ -61,13 +65,70 @@ public class StudentCourseWindow extends JFrame {
 										.addGap(18)));
 
 		JButton addCourseButton = new JButton("添加课程");
+		addCourseButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				AddStudentCourseInfoWindow addWindow = new AddStudentCourseInfoWindow(studentCourseDAO, student, StudentCourseWindow.this);
+				addWindow.setVisible(true);
+				
+			}
+			
+		});
 		controlPanel.add(addCourseButton);
 
 		JButton editInformation = new JButton("修改信息");
+		editInformation.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int selection = table.getSelectedRow();
+				if (selection == -1) {
+					JOptionPane.showMessageDialog(StudentCourseWindow.this, "请选中要操作的课程。", "非法操作", JOptionPane.ERROR_MESSAGE);
+				} else {
+					StudentCourse selectedStudentCourse = ((StudentCourseTableModel) table.getModel())
+							.valueAtRow(table.convertRowIndexToModel(selection));
+					EditStudentCourseInfoWindow editWindow = new EditStudentCourseInfoWindow(studentCourseDAO, selectedStudentCourse,
+							StudentCourseWindow.this);
+					editWindow.setVisible(true);
+				}
+				
+			}
+			
+		});
 		controlPanel.add(editInformation);
 
-		JButton button_1 = new JButton("删除课程");
-		controlPanel.add(button_1);
+		JButton deleteButton = new JButton("删除课程");
+		deleteButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int selection = table.getSelectedRow();
+				if (selection == -1) {
+					JOptionPane.showMessageDialog(StudentCourseWindow.this, "请选中要操作的课程。", "非法操作",
+							JOptionPane.ERROR_MESSAGE);
+				} else {
+					// Show specific details of a student
+					StudentCourse selectedStudentCourse = ((StudentCourseTableModel) table.getModel())
+							.valueAtRow(table.convertRowIndexToModel(selection));
+					int confirmationIndex = JOptionPane.showConfirmDialog(StudentCourseWindow.this,
+							"确定删除" + selectedStudentCourse.getCourseName() + "？", "删除课程信息", JOptionPane.YES_NO_OPTION,
+							JOptionPane.QUESTION_MESSAGE);
+					if (confirmationIndex == JOptionPane.YES_OPTION) {
+						try {
+							int success = studentCourseDAO.deleteStudentCourse(selectedStudentCourse);
+							if (success > 0) {
+								JOptionPane.showMessageDialog(StudentCourseWindow.this, "删除成功！");
+								loadData();
+							}
+						} catch (Exception err) {
+							JOptionPane.showMessageDialog(StudentCourseWindow.this, "删除失败！", "错误",
+									JOptionPane.ERROR_MESSAGE);
+						}
+					}
+				}
+			}
+		});
+		controlPanel.add(deleteButton);
 
 		JComboBox<Origin> comboBox = new JComboBox<Origin>();
 		comboBox.addItem(Origin.Local);
@@ -81,8 +142,8 @@ public class StudentCourseWindow extends JFrame {
 				if (selected != displayOrigin) {
 					StudentCourseWindow.this.displayOrigin = selected;
 					try {
-						courseTable.setModel(new StudentCourseTableModel(studentCourseDAO
-								.getCoursesForStudentIdFromOrigin(student.getId(), selected)));
+						table.setModel(new StudentCourseTableModel(
+								studentCourseDAO.getCoursesForStudentIdFromOrigin(student.getId(), selected)));
 					} catch (Exception ex) {
 						System.err.println("Error in quering database.");
 					}
@@ -92,11 +153,16 @@ public class StudentCourseWindow extends JFrame {
 		});
 		controlPanel.add(comboBox);
 
-		courseTable = new JTable(new StudentCourseTableModel(
+		table = new JTable(new StudentCourseTableModel(
 				studentCourseDAO.getCoursesForStudentIdFromOrigin(student.getId(), displayOrigin)));
-		courseTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tablePanel.setViewportView(courseTable);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tablePanel.setViewportView(table);
 		getContentPane().setLayout(groupLayout);
 
+	}
+
+	public void loadData() throws Exception {
+		table.setModel(new StudentCourseTableModel(
+				studentCourseDAO.getCoursesForStudentIdFromOrigin(student.getId(), displayOrigin)));
 	}
 }
