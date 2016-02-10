@@ -1,11 +1,11 @@
 package ui;
 
-import data.Course;
+import data.StudentCourse;
 
 public final class DeleteCourseWindow extends CourseDetailWindow {
 
 	@Override
-	public void loadCourse(Course course) {
+	public void loadCourse(StudentCourse course) {
 		// Dialogue and notification when deletion is done
 
 	}

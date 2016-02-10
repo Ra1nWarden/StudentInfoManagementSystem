@@ -2,10 +2,10 @@ package ui;
 
 import javax.swing.JFrame;
 
-import data.Course;
+import data.StudentCourse;
 
 public abstract class CourseDetailWindow extends JFrame {
 	
-	public abstract void loadCourse(Course course);
+	public abstract void loadCourse(StudentCourse course);
 
 }

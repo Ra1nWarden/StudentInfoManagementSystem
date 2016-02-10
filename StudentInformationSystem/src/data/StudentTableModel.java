@@ -6,11 +6,11 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 public final class StudentTableModel extends AbstractTableModel {
-	
-	private String[] columnNames = {"姓名", "学号", "性别", "年级", "出生日期"};
-	
+
+	private String[] columnNames = { "姓名", "学号", "性别", "年级", "出生日期" };
+
 	private List<Student> students;
-	
+
 	public StudentTableModel(List<Student> students) {
 		this.students = students;
 	}
@@ -24,12 +24,12 @@ public final class StudentTableModel extends AbstractTableModel {
 	public int getColumnCount() {
 		return columnNames.length;
 	}
-	
+
 	@Override
 	public String getColumnName(int col) {
 		return columnNames[col];
 	}
-	
+
 	public Student valueAtRow(int row) {
 		return students.get(row);
 	}
@@ -37,7 +37,7 @@ public final class StudentTableModel extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		Student student = students.get(rowIndex);
-		switch(columnIndex) {
+		switch (columnIndex) {
 		case 0:
 			return student.getName();
 		case 1:

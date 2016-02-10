@@ -112,9 +112,9 @@ public class StudentInfoWindow extends JFrame {
 		formPanel.add(resetButton, "4, 14, center, center");
 
 	}
-	
+
 	private boolean checkInput() {
-		if(nameField.getText().isEmpty()) {
+		if (nameField.getText().isEmpty()) {
 			return false;
 		}
 		String studentIdRegex = "[0-9]+";
@@ -123,24 +123,22 @@ public class StudentInfoWindow extends JFrame {
 	}
 
 	protected Student getEditedStudent() {
-		if(checkInput()) {
+		if (checkInput()) {
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 			try {
-				Student.Builder builder = new Student.Builder()
-					.name(nameField.getText())
-					.id(Integer.parseInt(idField.getText()))
-					.sex((Sex) sexSelection.getSelectedItem())
-					.level((Level) levelSelection.getSelectedItem())
-					.dateOfBirth(new Date(formatter.parse(dateOfBirthField.getText()).getTime()));
+				Student.Builder builder = new Student.Builder().name(nameField.getText())
+						.id(Integer.parseInt(idField.getText())).sex((Sex) sexSelection.getSelectedItem())
+						.level((Level) levelSelection.getSelectedItem())
+						.dateOfBirth(new Date(formatter.parse(dateOfBirthField.getText()).getTime()));
 				return builder.build();
-			} catch(Exception e) {
+			} catch (Exception e) {
 				System.err.println("Wrong format");
 				JOptionPane.showMessageDialog(this, "请以年-月-日的方式输入出生日期！");
 				return null;
 			}
 		} else {
-			 JOptionPane.showMessageDialog(this, "输入不合法！");
-			 return null;
+			JOptionPane.showMessageDialog(this, "输入不合法！");
+			return null;
 		}
 	}
 

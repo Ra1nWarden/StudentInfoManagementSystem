@@ -4,7 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
-import data.Course;
+import data.StudentCourse;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import com.jgoodies.forms.layout.FormLayout;
@@ -113,7 +113,7 @@ public class EditCourseInfoWindow extends CourseDetailWindow {
 	}
 
 	@Override
-	public void loadCourse(Course course) {
+	public void loadCourse(StudentCourse course) {
 		// TODO Auto-generated method stub
 		
 	}
