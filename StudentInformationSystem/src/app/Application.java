@@ -2,7 +2,7 @@ package app;
 
 import java.awt.EventQueue;
 
-import ui.MainWindow;
+import ui.LoginWindow;
 
 public final class Application {
 
@@ -13,8 +13,8 @@ public final class Application {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainWindow window = new MainWindow();
-					window.show();
+					LoginWindow loginWindow = new LoginWindow();
+					loginWindow.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
