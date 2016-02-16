@@ -39,7 +39,7 @@ public class StudentCourseWindow extends JFrame {
 		this.displayOrigin = Origin.Local;
 		setTitle("已完成课程");
 		setBounds(100, 100, 755, 490);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
 		JScrollPane tablePanel = new JScrollPane();
 

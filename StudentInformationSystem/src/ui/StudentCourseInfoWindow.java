@@ -35,7 +35,7 @@ public class StudentCourseInfoWindow extends JFrame {
 	public StudentCourseInfoWindow(StudentCourseDAO studentCourseDAO) {
 		this.studentCourseDAO = studentCourseDAO;
 		setBounds(100, 100, 353, 272);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
 		JPanel formPanel = new JPanel();
 		getContentPane().add(formPanel, BorderLayout.CENTER);

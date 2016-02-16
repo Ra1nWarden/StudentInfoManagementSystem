@@ -49,7 +49,10 @@ public class StudentDAO {
 
 	public int deleteStudent(Student student) throws SQLException {
 		PreparedStatement statement = null;
+		PreparedStatement studentCourseStatement = null;
 		try {
+			studentCourseStatement = connection.prepareStatement("delete from student_courses where student_id=" + student.getId());
+			studentCourseStatement.executeUpdate();
 			statement = connection.prepareStatement("delete from students where student_id=?");
 			statement.setInt(1, student.getId());
 			return statement.executeUpdate();
@@ -63,6 +66,14 @@ public class StudentDAO {
 	public int updateStudent(Student oldStudent, Student newStudent) throws SQLException {
 		PreparedStatement statement = null;
 		try {
+			if (oldStudent.getId() != newStudent.getId() || !oldStudent.getName().equals(newStudent.getName())) {
+				PreparedStatement studentCourseStatement = connection
+						.prepareStatement("update student_info_system.student_courses "
+								+ "set student_name=?, student_id=? " + "where student_id=" + oldStudent.getId());
+				studentCourseStatement.setString(1, newStudent.getName());
+				studentCourseStatement.setInt(2, newStudent.getId());
+				studentCourseStatement.executeUpdate();
+			}
 			statement = connection.prepareStatement("update student_info_system.students "
 					+ "set name=?, sex=?, date_of_birth=?, level=?, student_id=? " + "where student_id="
 					+ oldStudent.getId());
