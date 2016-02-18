@@ -60,7 +60,7 @@ public class StudentCourseDAO {
 
 	private StudentCourse convertToStudentCourse(ResultSet rs) throws Exception {
 		return new StudentCourse.Builder().courseName(rs.getString("name")).courseId(rs.getInt("course_id"))
-				.studentId(rs.getShort("student_id")).studentName(rs.getString("student_name"))
+				.studentId(rs.getInt("student_id")).studentName(rs.getString("student_name"))
 				.score(rs.getDouble("score"))
 				.origin(rs.getString("origin").equals("国内") ? Origin.Local : Origin.Overseas)
 				.id(rs.getInt("id")).build();
